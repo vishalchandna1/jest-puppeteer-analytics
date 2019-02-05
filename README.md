@@ -1,9 +1,17 @@
-[![CircleCI](https://circleci.com/gh/xfumihiro/jest-puppeteer-example/tree/master.svg?style=svg)](https://circleci.com/gh/xfumihiro/jest-puppeteer-example/tree/master)
 
-# jest-puppeteer-example
+# jest-puppeteer-sinon-poc
 
-This is an example of using the global setup/teardown apis alone with the async test-environment apis to make jest work smoothly with puppeteer.
+This POC is to create automated tests for the analytics using 
+- Puppeteer
+- Sinon
+- Jest
 
-![](screenshot.png)
+## How to setup?
+1. Clone and go to the directory
+2. `yarn install`
+3. `yarn test` or `npm test`
+
+### Pass the custom BASE_URL as - 
+`npm test -- -u="http://google.com"`
 
 > Please file an issue or send [me](https://twitter.com/xfumihiro) a DM if you have any questions.
