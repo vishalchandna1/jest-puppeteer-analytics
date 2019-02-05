@@ -9,5 +9,8 @@
     "prettier": "^1.9.2",
     "puppeteer": "^0.13.0",
     "rimraf": "^2.6.2"
+  },
+  "dependencies": {
+    "pubsub-js": "^1.7.0"
   }
 }
