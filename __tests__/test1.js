@@ -1,7 +1,5 @@
 const timeout = 15000;
 const chalk = require('chalk');
-// const sinon = require('sinon');
-const PubSub = require('pubsub-js');
 
 describe(
   '/ (Home Page)',
