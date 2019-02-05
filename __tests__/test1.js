@@ -11,9 +11,9 @@ describe(
     let main
     beforeAll(async () => {
       page = await global.__BROWSER__.newPage()
-      
+
       // We can make it dyniamic by taking the BASE_URL from the terminal using npm test -- -u="http://local.newell.com/"
-      await page.goto('http://local.newell.com/')
+      await page.goto(process.baseURL);
       await page.addScriptTag({url: 'https://cdnjs.cloudflare.com/ajax/libs/sinon.js/7.2.3/sinon.min.js'})
       await page.exposeFunction('LogSuccess', (data) => {
         return console.log(chalk.green(data));

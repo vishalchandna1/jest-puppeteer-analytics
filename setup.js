@@ -24,6 +24,6 @@ module.exports = async function() {
       BASE_URL = arg.split('-u=')[1]
     }
   }
-  process.baseURL = BASE_URL;
+  process.baseURL = BASE_URL || 'http://local.newell.com';
   fs.writeFileSync(path.join(DIR, 'wsEndpoint'), browser.wsEndpoint())
 }
