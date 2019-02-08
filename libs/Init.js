@@ -1,10 +1,8 @@
 const chalk = require('chalk')
+const includeSinon = require('./includeSinon');
 
 const init = async function(page) {
-  await page.addScriptTag({
-    url:
-      'https://cdnjs.cloudflare.com/ajax/libs/sinon.js/7.2.3/sinon.min.js',
-  })
+  await includeSinon(page);
   await page.exposeFunction('LogSuccess', data => {
     return console.log(chalk.green(data))
   })
@@ -14,9 +12,11 @@ const init = async function(page) {
   await page.exposeFunction('LogWarning', data => {
     return console.log(chalk.red(data))
   })
+
   page.on('console', msg => {
     for (let i = 0; i < msg.args.length; ++i) console.log(`${msg.args[i]}`)
   })
 }
+
 
 module.exports = init;

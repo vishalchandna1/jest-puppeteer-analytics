@@ -1,4 +1,4 @@
-const timeout = 15000;
+const timeout = 25000;
 const chalk = require('chalk');
 const init = require('../libs/Init.js');
 
@@ -75,7 +75,7 @@ describe(
           // Triggering the load event to which would be spied by sinon.
           dispatchEvent(new Event('load'));
 
-          // Testing click event only done once.
+          // Testing load event.
           LogCurrentStatus('Testing - Load event.');
           sinon.assert.called(spy);
           LogSuccess('Success');

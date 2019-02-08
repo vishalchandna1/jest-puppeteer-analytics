@@ -1,4 +1,4 @@
-const timeout = 20000;
+const timeout = 25000;
 const chalk = require('chalk');
 const init = require('../libs/Init.js');
 
