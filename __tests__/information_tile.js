@@ -10,8 +10,6 @@ describe(
     beforeAll(async () => {
       page = await global.__BROWSER__.newPage();
 
-      // We can make it dyniamic by taking the BASE_URL from the terminal using npm test -- -u="http://local.newell.com/"
-      await page.goto(process.baseURL);
       await init(page);
     }, timeout);
 
@@ -36,22 +34,22 @@ describe(
             ) {
               const $element = jQuery($elements[wrapperIndex]);
               const elementData = $element.data();
-              var analyticsData = {
-                event_name: 'information_tile_click_cta',
-                event_entity: 'InformationTile',
-                event_category: 'information_tile|info_tile|' + elementData.tileName,
-                event_action: 'information_tile_click',
-                event_label: 'information_tile|' + $wrapper.data().infoTitle,
+              const analyticsData = {
+                event_name: 'component_click_cta',
+                event_entity: 'Component',
+                event_category: 'components|' + elementData.tileName,
+                event_action: 'component_click',
+                event_label: 'component|' + $wrapper.data().infoTitle,
                 event_location: window.document.location.pathname,
-                event_click_name : 'information_tile|' + elementData.tileName,
-                event_click_position : 'information_tile|' + $element.parent().data().tileIndex
+                event_click_name : 'component|' + elementData.tileName,
+                event_click_position : 'component|' + $element.parent().data().tileIndex
               };
 
               // Triggering the click event to which would be spied by sinon.
               await $element.trigger('click');
 
               // Testing click event only done once.
-              LogCurrentStatus('Testing - Only one click on the element.');
+              LogCurrentStatus('Testing - Only click on the element.');
               sinon.assert.called(spy);
               LogSuccess('Success');
 
@@ -66,7 +64,7 @@ describe(
               }
             }
             LogSuccess(
-              'Analytics Tests Successfully Passed for Information tile click.'
+              'Click - Analytics Tests Successfully Passed for Information tile.'
             );
           }
         }
@@ -93,12 +91,12 @@ describe(
           // Testing for each container present in the DOM.
           $containers.each(function(i, element) {
             const elementData = jQuery(element).data();
-            var analyticsData = {
-              event_name: 'information_tile_load_cta',
-              event_entity: 'InformationTile',
-              event_category: 'information_tile|info_tile|' + elementData.tileTitles,
-              event_action: 'information_tile_impression',
-              event_label: 'information_tile|' + elementData.infoTitle,
+            const analyticsData = {
+              event_name: 'component_load_cta',
+              event_entity: 'Component',
+              event_category: 'components|' + elementData.tileTitles,
+              event_action: 'component_impression',
+              event_label: 'component|' + elementData.infoTitle,
               event_location: window.document.location.pathname
             };
 

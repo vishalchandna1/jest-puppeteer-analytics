@@ -1,6 +1,7 @@
-const timeout = 25000;
+const timeout = 50000;
 const init = require('../libs/Init.js');
 const includeSinon = require('../libs/includeSinon');
+const goTo = require('../libs/goTo');
 
 describe(
   '/ (Home Page)',
@@ -11,8 +12,6 @@ describe(
     beforeEach(async () => {
       page = await global.__BROWSER__.newPage();
 
-      // We can make it dyniamic by taking the BASE_URL from the terminal using npm test -- -u="http://local.newell.com/"
-      await page.goto(process.baseURL);
       await init(page);
     }, timeout);
 
@@ -32,7 +31,7 @@ describe(
         } else {
           const $element = $containers.find('#edit-search');
           const $elementAction = $containers.find('#edit-submit-acquia-search');
-          var analyticsData = {
+          const analyticsData = {
             event_name: 'feature_search_input',
             event_entity: 'Feature',
             event_category: 'feature|search',
@@ -68,7 +67,9 @@ describe(
     });
 
     it('Testing Search page load function', async () => {
-      await page.goto(process.baseURL + '/search?search=test');
+      // Fails the test if any callback is not fired within 10 seconds.
+      jest.setTimeout(10000);
+      await goTo(page, '/search?search=test');
       await includeSinon(page);
       await page.evaluate(async () => {
         const $containers = await jQuery(
@@ -90,7 +91,7 @@ describe(
             searchText = jQuery('.no-results-sorry').data('search-noresult');
           }
 
-          var analyticsData = {
+          const analyticsData = {
             event_name: 'feature_search_results',
             event_entity: 'Feature',
             event_category: 'feature|search',
@@ -145,7 +146,7 @@ describe(
           for (let index = 0; index < $containers.length; index++) {
             const $element = jQuery($containers[index]).find('a');
 
-            var analyticsData = {
+            const analyticsData = {
               event_name: 'feature_search_assist',
               event_entity: 'Feature',
               event_category: 'feature|search',
@@ -186,7 +187,9 @@ describe(
     });
 
     it('Testing Original search link click', async () => {
-      await page.goto(process.baseURL + '/search?search=pens');
+      // Fails the test if any callback is not fired within 10 seconds.
+      jest.setTimeout(10000);
+      await goTo(page, '/search?search=pens')
       await includeSinon(page);
       await page.evaluate(async () => {
         const $containers = await jQuery('.results-string-container').find(
@@ -199,7 +202,7 @@ describe(
         } else {
           const $element = $containers.find('a');
 
-          var analyticsData = {
+          const analyticsData = {
             event_name: 'feature_search_recommend',
             event_entity: 'Feature',
             event_category: 'feature|search',

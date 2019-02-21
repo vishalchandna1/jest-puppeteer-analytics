@@ -1,5 +1,5 @@
 const timeout = 25000;
-const chalk = require('chalk');
+const init = require('../libs/Init.js');
 
 describe(
   '/ (Home Page)',
@@ -9,22 +9,7 @@ describe(
     let main;
     beforeAll(async () => {
       page = await global.__BROWSER__.newPage();
-
-      // We can make it dyniamic by taking the BASE_URL from the terminal using npm test -- -u="http://local.newell.com/"
-      await page.goto(process.baseURL);
-      await page.addScriptTag({
-        url:
-          'https://cdnjs.cloudflare.com/ajax/libs/sinon.js/7.2.3/sinon.min.js',
-      });
-      await page.exposeFunction('LogSuccess', data => {
-        return console.log(chalk.green(data));
-      });
-      await page.exposeFunction('LogCurrentStatus', data => {
-        return console.log(chalk.yellow(data));
-      });
-      page.on('console', msg => {
-        for (let i = 0; i < msg.args.length; ++i) console.log(`${msg.args[i]}`);
-      });
+      await init(page);
     }, timeout);
 
     afterAll(async () => {

@@ -10,8 +10,6 @@ describe(
     beforeAll(async () => {
       page = await global.__BROWSER__.newPage();
 
-      // We can make it dyniamic by taking the BASE_URL from the terminal using npm test -- -u="http://local.newell.com/"
-      await page.goto(process.baseURL);
       await init(page);
     }, timeout);
 
@@ -69,7 +67,7 @@ describe(
               }
             }
             LogSuccess(
-              'Analytics Tests Successfully Passed for Category crousel click.'
+              'Click - Analytics Tests Successfully Passed for Category crousel.'
             );
           }
         }
@@ -95,7 +93,7 @@ describe(
 
           // Testing for each container present in the DOM.
           $containers.each(function(i, element) {
-            var analyticsData = {
+            const analyticsData = {
               event_name: 'category_impression_carousel',
               event_entity: 'Category',
               event_category:

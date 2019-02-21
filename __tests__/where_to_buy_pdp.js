@@ -11,12 +11,7 @@ describe(
     beforeEach(async () => {
       page = await global.__BROWSER__.newPage();
 
-      // We can make it dyniamic by taking the BASE_URL from the terminal using npm test -- -u="http://local.newell.com/"
-      await page.goto(
-        process.baseURL +
-          '/pens/colored-lead-refills/PMColoredLeadRefillsPink0.7mm'
-      );
-      await init(page);
+      await init(page, '/pens/colored-lead-refills/PMColoredLeadRefillsPink0.7mm');
     }, timeout);
 
     afterAll(async () => {

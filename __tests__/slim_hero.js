@@ -1,5 +1,4 @@
 const timeout = 25000;
-const chalk = require('chalk');
 const init = require('../libs/Init.js');
 
 describe(
@@ -10,6 +9,7 @@ describe(
     let main;
     beforeAll(async () => {
       page = await global.__BROWSER__.newPage();
+
       await init(page);
     }, timeout);
 
@@ -17,24 +17,23 @@ describe(
       await page.close();
     });
 
-    it('Testing analytics click event', async () => {
+    it('Testing Slim hero block click event', async () => {
       const data = await page.evaluate(async () => {
         const spy = window.sinon.spy(window.utag, 'link');
-        const $containers = jQuery('.b-50-50');
+        const $containers = jQuery('.slim-hero');
         if ($containers.length === 0) {
-          LogWarning('No 50-50 Block found.');
+          LogWarning('No Information tile block found.');
         } else {
           for (let index = 0; index < $containers.length; index++) {
-            const $wrapper = jQuery($containers[index]);
-            const $element = $wrapper.find('.b-50-50__container');
-            const elementData = $element.data();
+            
+            const $element = jQuery($containers[index]);
             const analyticsData = {
-              event_name: 'component_click_5050',
-              event_entity: 'Component',
-              event_category: 'components|5050',
-              event_action: 'component_click',
-              event_label: 'component|' + elementData.title,
-              event_location: window.document.location.pathname,
+              event_name  : 'component_click_trackslim',
+              event_entity  : 'Component',
+              event_category  : 'components|slim_hero',
+              event_action  : 'component_click',
+              event_label : 'component|' + $element.data().title,
+              event_location  : window.document.location.pathname,
             };
 
             // Triggering the click event to which would be spied by sinon.
@@ -42,7 +41,7 @@ describe(
 
             // Testing click event only done once.
             LogCurrentStatus('Testing - Only one click on the element.');
-            sinon.assert.calledOnce(spy);
+            sinon.assert.called(spy);
             LogSuccess('Success');
 
             // Verifying each entity of the analytics payload object.
@@ -54,20 +53,22 @@ describe(
               );
               LogSuccess('Success');
             }
-            LogSuccess('Click - Analytics Tests Successfully Passed for 50-50 Block.');
+            LogSuccess(
+              'Click - Analytics Tests Successfully Passed for Slim hero block.'
+            );
           }
         }
         spy.restore();
       });
     });
 
-    it('Testing analytics load event', async () => {
+    it('Testing Slim hero block load event', async () => {
       const data = await page.evaluate(async () => {
-        const $containers = jQuery('.b-50-50');
+        const $containers = jQuery('.slim-hero');
         const spy = window.sinon.spy(window.utag, 'link');
 
         if ($containers.length === 0) {
-          LogWarning('No 50-50 Block found.');
+          LogWarning('No Information tile block found.');
         } else {
           // Triggering the load event to which would be spied by sinon.
           dispatchEvent(new Event('load'));
@@ -79,16 +80,13 @@ describe(
 
           // Testing for each container present in the DOM.
           $containers.each(function(i, element) {
-            var elementData = jQuery(element)
-              .find('.b-50-50__container')
-              .data();
             const analyticsData = {
-              event_name: 'component_impression_5050',
-              event_entity: 'Component',
-              event_category: 'components|5050',
-              event_action: 'component_impression',
-              event_label: 'component|' + elementData.title,
-              event_location: window.document.location.pathname,
+              event_name: 'component_impression_trackslim',
+              event_entity  : 'Component',
+              event_category  : 'components|slim_hero',
+              event_action  : 'component_impression',
+              event_label : 'component|' + jQuery(element).data().title,
+              event_location  : window.document.location.pathname,
             };
 
             LogCurrentStatus(`Testing container - ${i}`);
@@ -107,7 +105,7 @@ describe(
 
           // Log - Successfull pass for all tests.
           LogSuccess(
-            'Load - Analytics Tests Successfully Passed for 50-50 Block.'
+            'Load - Analytics Tests Successfully Passed for Slim hero block.'
           );
         }
         spy.restore();
